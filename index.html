@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Stock Reconciliation</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-labelledby="app-title">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Sales Executive Stock Control</p>
+            <h1 id="app-title">Daily Stock Reconciliation</h1>
+          </div>
+          <div class="status-pill" id="reconcile-status">Balanced</div>
+        </header>
+
+        <section class="meta-grid" aria-label="Daily details">
+          <label>
+            Date
+            <input type="date" id="entry-date" />
+          </label>
+          <label>
+            Sales Executive
+            <input type="text" id="executive-name" placeholder="Name" />
+          </label>
+          <label>
+            Route / Area
+            <input type="text" id="route-name" placeholder="Route" />
+          </label>
+          <label>
+            Warehouse
+            <input type="text" id="warehouse-name" placeholder="Warehouse" />
+          </label>
+        </section>
+
+        <section class="summary-grid" aria-label="Daily summary totals">
+          <article>
+            <span>Total Issued</span>
+            <strong id="total-issued">0</strong>
+          </article>
+          <article>
+            <span>Total Out</span>
+            <strong id="total-out">0</strong>
+          </article>
+          <article>
+            <span>Closing Balance</span>
+            <strong id="total-expected">0</strong>
+          </article>
+          <article>
+            <span>Variance</span>
+            <strong id="total-variance">0</strong>
+          </article>
+          <article>
+            <span>Finance Deposit</span>
+            <strong id="total-deposit">0</strong>
+          </article>
+        </section>
+
+        <section class="table-panel" aria-label="Stock reconciliation table">
+          <div class="table-toolbar">
+            <h2>Stock Lines</h2>
+            <div class="toolbar-actions">
+              <button type="button" class="icon-button" id="add-row" aria-label="Add stock line" title="Add stock line">
+                <span aria-hidden="true">+</span>
+              </button>
+              <button type="button" class="icon-button" id="clear-form" aria-label="Clear form" title="Clear form">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Issued</th>
+                  <th>Sales</th>
+                  <th>Sales Amount</th>
+                  <th>FOC</th>
+                  <th>Return / Exchange</th>
+                  <th>Actual Unload</th>
+                  <th>Closing Balance</th>
+                  <th>Variance</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="stock-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="actions">
+          <button type="button" class="primary-action" id="save-entry">Save Daily Record</button>
+          <button type="button" class="secondary-action" id="export-csv">Export CSV</button>
+        </section>
+      </section>
+
+      <aside class="history-panel" aria-label="Saved daily records">
+        <div class="history-header">
+          <div>
+            <p class="eyebrow">Saved Records</p>
+            <h2>Daily History</h2>
+          </div>
+          <button type="button" class="icon-button" id="clear-history" aria-label="Clear history" title="Clear history">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="history-list" id="history-list"></div>
+      </aside>
+    </main>
+
+    <template id="row-template">
+      <tr>
+        <td>
+          <input class="product-input" type="text" placeholder="SKU / Product" data-field="product" list="product-options" />
+        </td>
+        <td><input type="number" min="0" step="0.01" value="0" data-field="price" /></td>
+        <td><input type="number" min="0" step="1" value="0" data-field="issued" /></td>
+        <td><input type="number" min="0" step="1" value="0" data-field="sales" /></td>
+        <td class="calculated" data-output="salesAmount">0</td>
+        <td><input type="number" min="0" step="1" value="0" data-field="foc" /></td>
+        <td><input type="number" min="0" step="1" value="0" data-field="returnExchange" /></td>
+        <td><input type="number" min="0" step="1" value="0" data-field="unload" /></td>
+        <td class="calculated" data-output="expected">0</td>
+        <td class="calculated variance-cell" data-output="variance">0</td>
+        <td>
+          <button type="button" class="row-remove" aria-label="Remove stock line" title="Remove stock line">&times;</button>
+        </td>
+      </tr>
+    </template>
+
+    <datalist id="product-options"></datalist>
+    <script src="item-master.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
